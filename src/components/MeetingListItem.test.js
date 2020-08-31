@@ -4,7 +4,8 @@ import MeetingListItem from './MeetingListItem';
 
 describe('MeetingListItem', () => {
   it('render the MeetingListItem', () => {
-    render(<MeetingListItem meeting={{ person: 'test person' }} />);
+    const today = new Date();
+    render(<MeetingListItem meeting={{ person: 'test person', day: today }} />);
     expect(screen.getByText('test person')).toBeInTheDocument();
   });
 });

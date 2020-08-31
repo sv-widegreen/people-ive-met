@@ -6,5 +6,13 @@ MeetingListItem.propTypes = {
 };
 
 export default function MeetingListItem({ meeting }) {
-  return <li>{meeting.person}</li>;
+  const { person, day } = meeting;
+  const dateMet = day.toDateString();
+  return (
+    <li>
+      You have met
+      <p>{person}</p>
+      <p>on {dateMet}</p>
+    </li>
+  );
 }

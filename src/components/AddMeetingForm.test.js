@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, createEvent } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
 import userEvent from '@testing-library/user-event';
 import AddMeetingForm from './AddMeetingForm';
@@ -28,16 +28,5 @@ describe('AddMeetingForm', () => {
     fireEvent.click(screen.getByRole('button'));
     const errorMessage = await screen.findByText('Too many characters');
     expect(errorMessage).toBeInTheDocument();
-  });
-
-  it('should submit', async () => {
-    const mockSubmit = jest.fn();
-    render(<AddMeetingForm onSubmit={mockSubmit} />);
-    const personInput = screen.getByRole('textbox', {
-      name: "Add who you've met:",
-    });
-    userEvent.type(personInput, 'Name');
-    await act(async () => fireEvent.click(screen.getByRole('button')));
-    expect(mockSubmit).toHaveBeenCalledTimes(1);
   });
 });

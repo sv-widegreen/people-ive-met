@@ -6,6 +6,7 @@ import * as yup from 'yup';
 
 const AddMeetingSchema = yup.object().shape({
   person: yup.string().required().max(30),
+  day: yup.date(),
 });
 
 AddMeetingForm.propTypes = {
@@ -16,7 +17,6 @@ export default function AddMeetingForm({ onSubmit }) {
   const { handleSubmit, register, errors } = useForm({
     resolver: yupResolver(AddMeetingSchema),
   });
-
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <label>
@@ -28,6 +28,10 @@ export default function AddMeetingForm({ onSubmit }) {
         {errors.person && errors.person.type === 'max' && (
           <p>Too many characters</p>
         )}
+      </label>
+      <label>
+        Date: <input type="date" name="day" ref={register} />
+        {errors.day && <p>Please select a date</p>}
       </label>
       <button>Add</button>
     </form>

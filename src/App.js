@@ -15,6 +15,7 @@ export default function App() {
   function updateMeetings(newMeeting, event) {
     event.target.reset();
     setMeetings([...meetings, newMeeting]);
-    console.table(meetings);
+    console.log(meetings);
+    console.log(newMeeting.day);
   }
 }
