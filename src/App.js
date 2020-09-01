@@ -7,13 +7,12 @@ export default function App() {
   return (
     <>
       <h1>People I've met</h1>
-      <AddMeetingForm onSubmit={updateMeetings} />
+      <AddMeetingForm addMeeting={updateMeetings} />
       <MeetingList meetingList={meetings} />
     </>
   );
 
-  function updateMeetings(newMeeting, event) {
-    event.target.reset();
+  function updateMeetings(newMeeting) {
     setMeetings([...meetings, newMeeting]);
     console.log(meetings);
     console.log(newMeeting.day);
