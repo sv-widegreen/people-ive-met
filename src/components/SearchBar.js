@@ -1,5 +1,3 @@
-import React, { useState, useMemo } from 'react';
-import matchSorter, { rankings } from 'match-sorter';
 import {
   Combobox,
   ComboboxInput,
@@ -8,22 +6,32 @@ import {
   ComboboxPopover,
 } from '@reach/combobox';
 import '@reach/combobox/styles.css';
+import matchSorter, { rankings } from 'match-sorter';
+import PropTypes from 'prop-types';
+import React, { useMemo, useState } from 'react';
 
-export default function SearchBar({ searchList }) {
+SearchBar.propTypes = {
+  searchList: PropTypes.array,
+  showSelection: PropTypes.func,
+};
+
+export default function SearchBar({ searchList, showSelection }) {
   const [searchTerm, setSearchTerm] = useState('');
   const results = usePersonMatch(searchTerm);
 
   return (
     <div>
-      <Combobox>
+      <Combobox onSelect={showSelection}>
+        <p>Select a meeting:</p>
         <ComboboxInput
+          placeholder="Search for a person"
           onChange={(event) => setSearchTerm(event.target.value)}
         />
         {results && (
           <ComboboxPopover>
             {results.length > 0 ? (
               <ComboboxList>
-                {results.slice(0, 10).map((result, index) => (
+                {results.slice(-1).map((result, index) => (
                   <ComboboxOption key={index} value={`${result.person}`} />
                 ))}
               </ComboboxList>
@@ -37,7 +45,6 @@ export default function SearchBar({ searchList }) {
   );
 
   function usePersonMatch(searchTerm) {
-    // const throttledTerm = useThrottle(searchTerm, 100);
     return useMemo(
       () =>
         searchTerm.trim() === ''

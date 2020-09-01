@@ -4,16 +4,16 @@ import MeetingList from './components/MeetingList';
 import { useLocalStorageState } from './utils/useLocalStorageState';
 
 export default function App() {
-  const [meetings, setMeetings] = useLocalStorageState('meetings');
+  const [allMeetings, setAllMeetings] = useLocalStorageState('allMeetings');
   return (
     <>
       <h1>People I've met</h1>
       <AddMeetingForm addMeeting={updateMeetings} />
-      <MeetingList meetingList={meetings} />
+      <MeetingList meetingList={allMeetings} />
     </>
   );
 
   function updateMeetings(newMeeting) {
-    setMeetings([...meetings, newMeeting]);
+    setAllMeetings([...allMeetings, newMeeting]);
   }
 }

@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useState } from 'react';
 import MeetingListItem from './MeetingListItem';
 import SearchBar from './SearchBar';
 
@@ -8,12 +8,11 @@ MeetingList.propTypes = {
 };
 
 export default function MeetingList({ meetingList }) {
-  const fortniteAgo = new Date(Date.now() - 12096e5);
-
-  const last14daysList = meetingList
+  const fortnightAgo = new Date(Date.now() - 12096e5);
+  const fortnightAgoList = meetingList
     .filter((meeting) => {
       const date = new Date(meeting.dateMet);
-      return date > fortniteAgo;
+      return date > fortnightAgo;
     })
     .sort((a, b) => {
       const dateA = new Date(a.dateMet);
@@ -21,20 +20,36 @@ export default function MeetingList({ meetingList }) {
       return dateA > dateB ? -1 : 1;
     });
 
-  console.log('last14daysList', last14daysList);
+  const [selectedList, setSelectedList] = useState([]);
+
   return (
     <>
-      <SearchBar searchList={last14daysList} />
-      {last14daysList.length > 0 && (
+      <SearchBar searchList={fortnightAgoList} showSelection={selectMeetings} />
+      {fortnightAgoList.length > 0 && selectedList.length === 0 && (
         <>
           <h2>All meetings of the last 14 days:</h2>
           <ul>
-            {last14daysList.map((meeting, index) => (
+            {fortnightAgoList.map((meeting, index) => (
               <MeetingListItem key={meeting.person + index} meeting={meeting} />
             ))}
           </ul>
         </>
       )}
+
+      {selectedList.length > 0 && (
+        <ul>
+          {selectedList.map((meeting, index) => (
+            <MeetingListItem key={meeting.person + index} meeting={meeting} />
+          ))}
+        </ul>
+      )}
     </>
   );
+
+  function selectMeetings(searchTerm) {
+    const selectedList = fortnightAgoList.filter(
+      (meeting) => meeting.person === searchTerm
+    );
+    setSelectedList(selectedList);
+  }
 }
