@@ -10,7 +10,7 @@ export default function MeetingList({ meetingList }) {
   const fortniteAgo = new Date(Date.now() - 12096e5);
   console.log(fortniteAgo);
   const last14daysList = meetingList
-    .filter((meeting) => meeting.day > fortniteAgo)
+    .filter((meeting) => meeting.day > fortniteAgo && meeting.day < new Date())
     .sort((a, b) => (a.day > b.day ? -1 : 1));
 
   return (
