@@ -1,6 +1,5 @@
 import React from 'react';
-import { render, screen, fireEvent, createEvent } from '@testing-library/react';
-import { act } from 'react-dom/test-utils';
+import { render, screen, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import AddMeetingForm from './AddMeetingForm';
 
