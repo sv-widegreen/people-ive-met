@@ -31,7 +31,7 @@ export default function SearchBar({ searchList, showSelection }) {
           <ComboboxPopover>
             {results.length > 0 ? (
               <ComboboxList>
-                {results.slice(-1).map((result, index) => (
+                {results.slice(0, 10).map((result, index) => (
                   <ComboboxOption key={index} value={`${result.person}`} />
                 ))}
               </ComboboxList>

@@ -8,6 +8,7 @@ export default function App() {
   return (
     <>
       <h1>People I've met</h1>
+      <h2>(in the last 14 days)</h2>
       <AddMeetingForm addMeeting={updateMeetings} />
       <MeetingList meetingList={allMeetings} />
     </>

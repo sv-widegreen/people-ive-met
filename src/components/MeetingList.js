@@ -9,39 +9,36 @@ MeetingList.propTypes = {
 
 export default function MeetingList({ meetingList }) {
   const fortnightAgo = new Date(Date.now() - 12096e5);
-  const fortnightAgoList = meetingList
-    .filter((meeting) => {
-      const date = new Date(meeting.dateMet);
-      return date > fortnightAgo;
-    })
-    .sort((a, b) => {
-      const dateA = new Date(a.dateMet);
-      const dateB = new Date(b.dateMet);
-      return dateA > dateB ? -1 : 1;
-    });
-
-  const [selectedList, setSelectedList] = useState([]);
+  const fortnightAgoList = meetingList.filter((meeting) => {
+    const date = new Date(meeting.dateMet);
+    return date > fortnightAgo;
+  });
+  console.log(fortnightAgoList);
+  const [selectedList, setSelectedList] = useState(fortnightAgoList);
+  console.log('selectedList', selectedList);
 
   return (
     <>
       <SearchBar searchList={fortnightAgoList} showSelection={selectMeetings} />
-      {fortnightAgoList.length > 0 && selectedList.length === 0 && (
+      <button type="button" onClick={() => clearSearch()}>
+        Show all meetings
+      </button>
+      <button type="button" onClick={() => sortByPerson()}>
+        Sort by person
+      </button>
+      <button type="button" onClick={() => sortByDate()}>
+        Sort by date
+      </button>
+
+      {selectedList.length > 0 && (
         <>
-          <h2>All meetings of the last 14 days:</h2>
+          <h2>You have met:</h2>
           <ul>
-            {fortnightAgoList.map((meeting, index) => (
+            {selectedList.map((meeting, index) => (
               <MeetingListItem key={meeting.person + index} meeting={meeting} />
             ))}
           </ul>
         </>
-      )}
-
-      {selectedList.length > 0 && (
-        <ul>
-          {selectedList.map((meeting, index) => (
-            <MeetingListItem key={meeting.person + index} meeting={meeting} />
-          ))}
-        </ul>
       )}
     </>
   );
@@ -51,5 +48,25 @@ export default function MeetingList({ meetingList }) {
       (meeting) => meeting.person === searchTerm
     );
     setSelectedList(selectedList);
+  }
+
+  function clearSearch() {
+    setSelectedList(fortnightAgoList);
+  }
+
+  function sortByPerson() {
+    const sortedList = [...selectedList].sort((a, b) => (a > b ? 1 : -1));
+    setSelectedList(sortedList);
+    console.log('sortedPerson', selectedList);
+  }
+
+  function sortByDate() {
+    const sortedList = [...selectedList].sort((a, b) => {
+      const dateA = new Date(a.dateMet);
+      const dateB = new Date(b.dateMet);
+      return dateA > dateB ? -1 : 1;
+    });
+    setSelectedList(sortedList);
+    console.log('sortedDate', selectedList);
   }
 }
