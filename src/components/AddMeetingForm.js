@@ -12,7 +12,7 @@ const AddMeetingSchema = yup.object().shape({
 });
 
 AddMeetingForm.propTypes = {
-  onSubmit: PropTypes.func,
+  addMeeting: PropTypes.func,
 };
 
 export default function AddMeetingForm({ addMeeting }) {
@@ -20,9 +20,8 @@ export default function AddMeetingForm({ addMeeting }) {
     resolver: yupResolver(AddMeetingSchema),
   });
 
-  const [location, setLocation] = useState();
+  const [city, setCity] = useState();
   const [loading, setLoading] = useState();
-  console.log(location);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -45,13 +44,13 @@ export default function AddMeetingForm({ addMeeting }) {
           id="city"
           name="city"
           placeholder="City"
-          value={location || ''}
-          onChange={(event) => setLocation(event.target.value)}
+          value={city || ''}
+          onChange={(event) => setCity(event.target.value)}
           ref={register}
         />
         <button
           type="button"
-          onClick={() => getCurrentLocation({ setLocation, setLoading })}
+          onClick={() => getCurrentLocation({ setCity, setLoading })}
         >
           or use current location
         </button>
@@ -68,7 +67,7 @@ export default function AddMeetingForm({ addMeeting }) {
 
   function onSubmit(newMeeting, event) {
     event.target.reset();
-    setLocation('');
+    setCity('');
     addMeeting(newMeeting);
   }
 }
