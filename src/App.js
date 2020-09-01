@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import AddMeetingForm from './components/AddMeetingForm';
 import MeetingList from './components/MeetingList';
+import { useLocalStorageState } from './utils/useLocalStorageState';
 
 export default function App() {
-  const [meetings, setMeetings] = useState([]);
+  const [meetings, setMeetings] = useLocalStorageState('meetings');
   return (
     <>
       <h1>People I've met</h1>
@@ -14,7 +15,5 @@ export default function App() {
 
   function updateMeetings(newMeeting) {
     setMeetings([...meetings, newMeeting]);
-    console.log(meetings);
-    console.log(newMeeting.day);
   }
 }

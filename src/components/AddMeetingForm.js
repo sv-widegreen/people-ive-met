@@ -4,10 +4,11 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import getCurrentLocation from '../utils/getCurrentLocation';
+import { maxDate, minDate } from '../utils/setDateRange';
 
 const AddMeetingSchema = yup.object().shape({
   person: yup.string().required().max(30),
-  day: yup.date(),
+  dateMet: yup.date(),
   city: yup.string().required().max(50),
 });
 
@@ -34,9 +35,16 @@ export default function AddMeetingForm({ addMeeting }) {
         <p>Too many characters</p>
       )}
 
-      <label htmlFor="day">Date:</label>
-      <input type="date" id="day" name="day" ref={register} />
-      {errors.day && <p>Please select a date</p>}
+      <label htmlFor="dateMet">Date:</label>
+      <input
+        type="date"
+        min={minDate}
+        max={maxDate}
+        id="dateMet"
+        name="dateMet"
+        ref={register}
+      />
+      {errors.dateMet && <p>Please select a date</p>}
 
       <label htmlFor="city">Type in the city:</label>
       <div className="city">
@@ -65,9 +73,12 @@ export default function AddMeetingForm({ addMeeting }) {
     </form>
   );
 
-  function onSubmit(newMeeting, event) {
+  function onSubmit(input, event) {
+    input.day = input.dateMet.getDate();
+    input.month = input.dateMet.getMonth() + 1;
+    input.dateMet = input.dateMet.toDateString();
+    addMeeting(input);
     event.target.reset();
     setCity('');
-    addMeeting(newMeeting);
   }
 }

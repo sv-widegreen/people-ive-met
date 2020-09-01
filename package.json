@@ -4,7 +4,9 @@
   "private": true,
   "dependencies": {
     "@hookform/resolvers": "^0.1.0",
+    "@reach/combobox": "^0.11.2",
     "axios": "^0.20.0",
+    "match-sorter": "^4.2.0",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
