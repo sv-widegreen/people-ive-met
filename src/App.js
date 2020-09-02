@@ -1,6 +1,7 @@
 import React from 'react';
 import AddMeetingForm from './components/AddMeetingForm';
 import MeetingList from './components/MeetingList';
+
 import { useLocalStorageState } from './utils/useLocalStorageState';
 
 export default function App() {
@@ -11,7 +12,7 @@ export default function App() {
       <h1>People I've met</h1>
       <h2>(in the last 14 days at least)</h2>
       <AddMeetingForm addMeeting={updateMeetings} />
-      {allMeetings.length > 0 && <MeetingList meetingList={allMeetings} />}
+      <MeetingList meetingList={allMeetings} />
     </>
   );
 

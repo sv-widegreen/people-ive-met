@@ -9,21 +9,12 @@ MeetingList.propTypes = {
 };
 
 export default function MeetingList({ meetingList }) {
-  const fortnightAgo = new Date(Date.now() - 12096e5);
-  const recentMeetingsList = meetingList.filter((meeting) => {
-    const date = new Date(meeting.dateMet);
-    return date > fortnightAgo;
-  });
-
-  const [selectedList, setSelectedList] = useState(recentMeetingsList);
+  const [selectedList, setSelectedList] = useState(meetingList);
 
   return (
     <StyledMeetingList>
       <h3>My recent meetings:</h3>
-      <SearchBar
-        searchList={recentMeetingsList}
-        showSelection={selectMeetings}
-      />
+      <SearchBar searchList={meetingList} showSelection={selectMeetings} />
       <StyledButtonGroup>
         <button type="button" onClick={() => clearSearch()}>
           Show all meetings
@@ -37,31 +28,38 @@ export default function MeetingList({ meetingList }) {
       </StyledButtonGroup>
       <h3>I have met:</h3>
       <ul>
-        {selectedList.map((meeting, index) => (
-          <MeetingListItem key={meeting.person + index} meeting={meeting} />
-        ))}
+        {selectedList.length < meetingList.length &&
+          meetingList.map((meeting, index) => (
+            <MeetingListItem key={meeting.person + index} meeting={meeting} />
+          ))}
+        {selectedList.length >= meetingList.length &&
+          selectedList.map((meeting, index) => (
+            <MeetingListItem key={meeting.person + index} meeting={meeting} />
+          ))}
       </ul>
     </StyledMeetingList>
   );
 
   function selectMeetings(searchTerm) {
-    const selectedList = recentMeetingsList.filter(
+    const selectedList = meetingList.filter(
       (meeting) => meeting.person === searchTerm
     );
     setSelectedList(selectedList);
   }
 
   function clearSearch() {
-    setSelectedList(recentMeetingsList);
+    setSelectedList(meetingList);
   }
 
   function sortByPerson() {
-    const sortedList = [...selectedList].sort((a, b) => (a > b ? 1 : -1));
+    const sortedList = [...meetingList].sort((a, b) =>
+      a.person > b.person ? 1 : -1
+    );
     setSelectedList(sortedList);
   }
 
   function sortByDate() {
-    const sortedList = [...selectedList].sort((a, b) => {
+    const sortedList = [...meetingList].sort((a, b) => {
       const dateA = new Date(a.dateMet);
       const dateB = new Date(b.dateMet);
       return dateA > dateB ? -1 : 1;
