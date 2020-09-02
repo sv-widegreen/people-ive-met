@@ -1,5 +1,5 @@
 {
-  "name": "sda-coding-challenge",
+  "name": "people I've met",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -12,6 +12,7 @@
     "react-dom": "^16.13.1",
     "react-hook-form": "^6.7.0",
     "react-scripts": "3.4.3",
+    "styled-components": "^5.1.1",
     "yup": "^0.29.3"
   },
   "scripts": {

@@ -9,6 +9,7 @@ import '@reach/combobox/styles.css';
 import matchSorter, { rankings } from 'match-sorter';
 import PropTypes from 'prop-types';
 import React, { useMemo, useState } from 'react';
+import styled from 'styled-components';
 
 SearchBar.propTypes = {
   searchList: PropTypes.array,
@@ -22,9 +23,9 @@ export default function SearchBar({ searchList, showSelection }) {
   return (
     <div>
       <Combobox onSelect={showSelection}>
-        <p>Select a meeting:</p>
+        <StyledLabel>Search for a person:</StyledLabel>
         <ComboboxInput
-          placeholder="Search for a person"
+          placeholder="Name"
           onChange={(event) => setSearchTerm(event.target.value)}
         />
         {results && (
@@ -56,3 +57,7 @@ export default function SearchBar({ searchList, showSelection }) {
     );
   }
 }
+
+const StyledLabel = styled.p`
+  margin: 0 0 10px 0;
+`;

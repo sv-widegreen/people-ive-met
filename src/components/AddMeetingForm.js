@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import getCurrentLocation from '../utils/getCurrentLocation';
 import { maxDate, minDate } from '../utils/setDateRange';
+import styled from 'styled-components';
 
 const AddMeetingSchema = yup.object().shape({
   person: yup.string().required().max(30),
@@ -25,7 +26,7 @@ export default function AddMeetingForm({ addMeeting }) {
   const [loading, setLoading] = useState();
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <StyledForm onSubmit={handleSubmit(onSubmit)}>
       <label htmlFor="person">Add who you've met:</label>
       <input id="person" name="person" placeholder="Name" ref={register} />
       {errors.person && errors.person.type === 'required' && (
@@ -47,7 +48,7 @@ export default function AddMeetingForm({ addMeeting }) {
       {errors.dateMet && <p>Please select a date</p>}
 
       <label htmlFor="city">Type in the city:</label>
-      <div className="city">
+      <div>
         <input
           id="city"
           name="city"
@@ -56,11 +57,12 @@ export default function AddMeetingForm({ addMeeting }) {
           onChange={(event) => setCity(event.target.value)}
           ref={register}
         />
+        or
         <button
           type="button"
           onClick={() => getCurrentLocation({ setCity, setLoading })}
         >
-          or use current location
+          use current location
         </button>
         {loading && <p>...loading...</p>}
       </div>
@@ -69,8 +71,8 @@ export default function AddMeetingForm({ addMeeting }) {
       )}
       {errors.city && errors.city.type === 'max' && <p>Too many characters</p>}
 
-      <button>Add</button>
-    </form>
+      <button className="add">Add</button>
+    </StyledForm>
   );
 
   function onSubmit(input, event) {
@@ -82,3 +84,40 @@ export default function AddMeetingForm({ addMeeting }) {
     setCity('');
   }
 }
+
+const StyledForm = styled.form`
+  margin: 20px 0;
+  display: flex;
+  flex-flow: column wrap;
+  max-width: 500px;
+
+  label {
+    margin: 10px 0 0 0;
+  }
+
+  input {
+    margin: 10px 0 5px 0;
+  }
+
+  p {
+    color: var(--persian-plum);
+    font-size: 0.8rem;
+  }
+
+  div > button {
+    margin: 0 0 0 5px;
+    padding: 6px;
+  }
+
+  div > input {
+    margin: 10px 5px 5px 0;
+  }
+
+  .add {
+    margin: 20px 0;
+    border-radius: 50%;
+    align-self: center;
+    width: 50px;
+    height: 50px;
+  }
+`;

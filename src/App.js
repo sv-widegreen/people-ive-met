@@ -9,7 +9,7 @@ export default function App() {
   return (
     <>
       <h1>People I've met</h1>
-      <h2>(in the last 14 days)</h2>
+      <h2>(in the last 14 days at least)</h2>
       <AddMeetingForm addMeeting={updateMeetings} />
       {allMeetings.length > 0 && <MeetingList meetingList={allMeetings} />}
     </>
