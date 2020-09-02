@@ -5,12 +5,13 @@ import { useLocalStorageState } from './utils/useLocalStorageState';
 
 export default function App() {
   const [allMeetings, setAllMeetings] = useLocalStorageState('allMeetings');
+
   return (
     <>
       <h1>People I've met</h1>
       <h2>(in the last 14 days)</h2>
       <AddMeetingForm addMeeting={updateMeetings} />
-      <MeetingList meetingList={allMeetings} />
+      {allMeetings.length > 0 && <MeetingList meetingList={allMeetings} />}
     </>
   );
 

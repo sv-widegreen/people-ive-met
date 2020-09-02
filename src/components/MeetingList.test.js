@@ -4,11 +4,11 @@ import MeetingList from './MeetingList';
 
 describe('MeetingList', () => {
   it('renders MeetingList', () => {
-    const today = new Date();
     render(
-      <MeetingList meetingList={[{ person: 'test person', day: today }]} />
+      <MeetingList meetingList={[{ person: 'test person', city: 'Hamburg' }]} />
     );
     expect(screen.getByRole('list')).toBeInTheDocument();
+    screen.debug();
   });
 
   it('does not render the MeetingListItem when list is empty', () => {

@@ -9,17 +9,20 @@ MeetingList.propTypes = {
 
 export default function MeetingList({ meetingList }) {
   const fortnightAgo = new Date(Date.now() - 12096e5);
-  const fortnightAgoList = meetingList.filter((meeting) => {
+  const recentMeetingsList = meetingList.filter((meeting) => {
     const date = new Date(meeting.dateMet);
     return date > fortnightAgo;
   });
-  console.log(fortnightAgoList);
-  const [selectedList, setSelectedList] = useState(fortnightAgoList);
-  console.log('selectedList', selectedList);
+
+  const [selectedList, setSelectedList] = useState(recentMeetingsList);
 
   return (
     <>
-      <SearchBar searchList={fortnightAgoList} showSelection={selectMeetings} />
+      <h3>My recent meetings:</h3>
+      <SearchBar
+        searchList={recentMeetingsList}
+        showSelection={selectMeetings}
+      />
       <button type="button" onClick={() => clearSearch()}>
         Show all meetings
       </button>
@@ -29,35 +32,29 @@ export default function MeetingList({ meetingList }) {
       <button type="button" onClick={() => sortByDate()}>
         Sort by date
       </button>
-
-      {selectedList.length > 0 && (
-        <>
-          <h2>You have met:</h2>
-          <ul>
-            {selectedList.map((meeting, index) => (
-              <MeetingListItem key={meeting.person + index} meeting={meeting} />
-            ))}
-          </ul>
-        </>
-      )}
+      <h3>I have met:</h3>
+      <ul>
+        {selectedList.map((meeting, index) => (
+          <MeetingListItem key={meeting.person + index} meeting={meeting} />
+        ))}
+      </ul>
     </>
   );
 
   function selectMeetings(searchTerm) {
-    const selectedList = fortnightAgoList.filter(
+    const selectedList = recentMeetingsList.filter(
       (meeting) => meeting.person === searchTerm
     );
     setSelectedList(selectedList);
   }
 
   function clearSearch() {
-    setSelectedList(fortnightAgoList);
+    setSelectedList(recentMeetingsList);
   }
 
   function sortByPerson() {
     const sortedList = [...selectedList].sort((a, b) => (a > b ? 1 : -1));
     setSelectedList(sortedList);
-    console.log('sortedPerson', selectedList);
   }
 
   function sortByDate() {
@@ -67,6 +64,5 @@ export default function MeetingList({ meetingList }) {
       return dateA > dateB ? -1 : 1;
     });
     setSelectedList(sortedList);
-    console.log('sortedDate', selectedList);
   }
 }
