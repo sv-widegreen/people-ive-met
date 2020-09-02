@@ -9,7 +9,7 @@ A simple app to keep track of your recent meetings of the last 14 days
 
 ---
 
-Direct Link:
+Direct Link: https://people-ive-met.vercel.app/
 
 Or:
 Download repository and run
