@@ -45,6 +45,7 @@ export default function SearchBar({ searchList, showSelection }) {
     </div>
   );
 
+  // render dropdown suggestions with every input
   function usePersonMatch(searchTerm) {
     return useMemo(
       () =>

@@ -7,6 +7,7 @@ import * as yup from 'yup';
 import getCurrentLocation from '../../utils/getCurrentLocation';
 import { maxDate, minDate } from '../../utils/setDateRange';
 
+//validation with yup
 const AddMeetingSchema = yup.object().shape({
   person: yup.string().required().max(30),
   dateMet: yup.date(),
@@ -22,7 +23,9 @@ export default function AddMeetingForm({ addMeeting }) {
     resolver: yupResolver(AddMeetingSchema),
   });
 
+  // to set the city value of the input field to used geolocation
   const [city, setCity] = useState();
+  // to show the user something is happening if it takes longer to get the current location
   const [loading, setLoading] = useState();
 
   return (

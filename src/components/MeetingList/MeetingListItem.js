@@ -8,6 +8,8 @@ MeetingListItem.propTypes = {
 
 export default function MeetingListItem({ meeting }) {
   let { person, month, day, city } = meeting;
+
+  // to show the date and month always with two characters
   if (day < 10) {
     day = '0' + day;
   }

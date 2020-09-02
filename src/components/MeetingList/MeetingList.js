@@ -40,6 +40,7 @@ export default function MeetingList({ meetingList }) {
     </StyledMeetingList>
   );
 
+  // filter the list for search term
   function selectMeetings(searchTerm) {
     const selectedList = meetingList.filter(
       (meeting) => meeting.person === searchTerm
@@ -47,10 +48,12 @@ export default function MeetingList({ meetingList }) {
     setSelectedList(selectedList);
   }
 
+  // show all entries to reset search selection
   function clearSearch() {
     setSelectedList(meetingList);
   }
 
+  // sort functions
   function sortByPerson() {
     const sortedList = [...meetingList].sort((a, b) =>
       a.person > b.person ? 1 : -1
