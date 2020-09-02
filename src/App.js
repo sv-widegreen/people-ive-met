@@ -1,7 +1,6 @@
 import React from 'react';
-import AddMeetingForm from './components/AddMeetingForm';
-import MeetingList from './components/MeetingList';
-
+import AddMeetingForm from './components/AddMeetingForm/AddMeetingForm';
+import MeetingList from './components/MeetingList/MeetingList';
 import { useLocalStorageState } from './utils/useLocalStorageState';
 
 export default function App() {

@@ -2,10 +2,10 @@ import { yupResolver } from '@hookform/resolvers';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import * as yup from 'yup';
-import getCurrentLocation from '../utils/getCurrentLocation';
-import { maxDate, minDate } from '../utils/setDateRange';
 import styled from 'styled-components';
+import * as yup from 'yup';
+import getCurrentLocation from '../../utils/getCurrentLocation';
+import { maxDate, minDate } from '../../utils/setDateRange';
 
 const AddMeetingSchema = yup.object().shape({
   person: yup.string().required().max(30),

@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
+import styled from 'styled-components';
 import MeetingListItem from './MeetingListItem';
 import SearchBar from './SearchBar';
-import styled from 'styled-components';
 
 MeetingList.propTypes = {
   meetingList: PropTypes.array,
