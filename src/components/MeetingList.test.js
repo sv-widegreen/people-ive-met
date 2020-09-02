@@ -7,8 +7,7 @@ describe('MeetingList', () => {
     render(
       <MeetingList meetingList={[{ person: 'test person', city: 'Hamburg' }]} />
     );
-    expect(screen.getByRole('list')).toBeInTheDocument();
-    screen.debug();
+    expect(screen.getByText('My recent meetings:')).toBeInTheDocument();
   });
 
   it('does not render the MeetingListItem when list is empty', () => {
