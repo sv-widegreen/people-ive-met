@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import MeetingListItem from './MeetingListItem';
 import SearchBar from './SearchBar';
@@ -9,7 +9,11 @@ MeetingList.propTypes = {
 };
 
 export default function MeetingList({ meetingList }) {
-  const [selectedList, setSelectedList] = useState(meetingList);
+  const [selectedList, setSelectedList] = useState([]);
+
+  useEffect(() => {
+    setSelectedList(meetingList);
+  }, [meetingList]);
 
   return (
     <StyledMeetingList>
@@ -28,11 +32,7 @@ export default function MeetingList({ meetingList }) {
       </StyledButtonGroup>
       <h3>I have met:</h3>
       <ul>
-        {selectedList.length < meetingList.length &&
-          meetingList.map((meeting, index) => (
-            <MeetingListItem key={meeting.person + index} meeting={meeting} />
-          ))}
-        {selectedList.length >= meetingList.length &&
+        {selectedList.length > 0 &&
           selectedList.map((meeting, index) => (
             <MeetingListItem key={meeting.person + index} meeting={meeting} />
           ))}
@@ -42,10 +42,10 @@ export default function MeetingList({ meetingList }) {
 
   // filter the list for search term
   function selectMeetings(searchTerm) {
-    const selectedList = meetingList.filter(
+    const searchedMeetingList = [...meetingList].filter(
       (meeting) => meeting.person === searchTerm
     );
-    setSelectedList(selectedList);
+    setSelectedList(searchedMeetingList);
   }
 
   // show all entries to reset search selection
@@ -55,14 +55,14 @@ export default function MeetingList({ meetingList }) {
 
   // sort functions
   function sortByPerson() {
-    const sortedList = [...meetingList].sort((a, b) =>
+    const sortedList = [...selectedList].sort((a, b) =>
       a.person > b.person ? 1 : -1
     );
     setSelectedList(sortedList);
   }
 
   function sortByDate() {
-    const sortedList = [...meetingList].sort((a, b) => {
+    const sortedList = [...selectedList].sort((a, b) => {
       const dateA = new Date(a.dateMet);
       const dateB = new Date(b.dateMet);
       return dateA > dateB ? -1 : 1;
